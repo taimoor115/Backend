@@ -1,7 +1,11 @@
-import { sum } from "./math.js";
+// Events are signals that gives info that something has happen
 
-// difference between require and import
-// We cannot get the selective things in require but we can do in import
-// require are synchronous in nature while imports are async in nature
+const EventEmitter = require("events"); //EventEmitter is class in events
 
-console.log(sum(1, 2));
+const emitter = new EventEmitter();
+
+emitter.on("messageLogged", function () {
+  console.log("Event Logged");
+});
+
+emitter.emit("messageLogged");
