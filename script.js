@@ -1,5 +1,10 @@
-const info = require("./Fruits");
+var figlet = require("figlet");
 
-info.map((fruits) => {
-  console.log("Fruit", fruits.name, "and their color is ", fruits.color);
+figlet("Taimoor Hussain!!", function (err, data) {
+  if (err) {
+    console.log("Something went wrong...");
+    console.dir(err);
+    return;
+  }
+  console.log(data);
 });
