@@ -1,5 +1,5 @@
-const sum = (a, b) => a + b;
-const div = (a, b) => {
+export const sum = (a, b) => a + b;
+export const div = (a, b) => {
   if (b != 0) {
     return a / b;
   } else {
@@ -7,14 +7,14 @@ const div = (a, b) => {
   }
 };
 
-const SPEED = 50;
+export const SPEED = 50;
 
 // module.exports = 123;
 
-module.exports = {
-  sum: sum,
-  div: div,
-  SPEED: SPEED,
-};
+// module.exports = {
+//   sum: sum,
+//   div: div,
+//   SPEED: SPEED,
+// };
 
 // module.exports = obj;

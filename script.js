@@ -1,10 +1,7 @@
-var figlet = require("figlet");
+import { sum } from "./math.js";
 
-figlet("Taimoor Hussain!!", function (err, data) {
-  if (err) {
-    console.log("Something went wrong...");
-    console.dir(err);
-    return;
-  }
-  console.log(data);
-});
+// difference between require and import
+// We cannot get the selective things in require but we can do in import
+// require are synchronous in nature while imports are async in nature
+
+console.log(sum(1, 2));
