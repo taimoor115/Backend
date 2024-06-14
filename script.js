@@ -1,11 +1,13 @@
-// Events are signals that gives info that something has happen
+// Procedure to add Events in Node
+// Make a class that extends the EventEmitter
+// Make a method and put the emit on it that raise the noise or event/signal
+// Then export that class
+// After that make an instance of that class and put the listener on it and then
+// call the method of class
 
-const EventEmitter = require("events"); //EventEmitter is class in events
+const Logger = require("./logger");
+const logger = new Logger();
 
-const emitter = new EventEmitter();
+logger.on("messageLogged", (args) => console.log(args));
 
-emitter.on("messageLogged", function () {
-  console.log("Event Logged");
-});
-
-emitter.emit("messageLogged");
+logger.log("Hello");
