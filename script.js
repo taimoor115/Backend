@@ -1,13 +1,8 @@
-// Process
-// This object provides about the information and control over, the current Node js process
+// const moduleValue = require("./math");
+// console.log(moduleValue);
 
-// process.argv
-// returns an array containing the command line arguments passed when the Node js proccess was launched
-
-let args = process.argv;
-
-console.log(args.length);
-
-for (let i = 2; i < args.length; i++) {
-  console.log("Hello to", args[i]);
-}
+const math = require("./math");
+console.log(math.sum(2, 3));
+console.log(math.div(1, 0));
+console.log(math.div(1, 1));
+console.log(math.SPEED);
