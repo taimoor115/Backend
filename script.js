@@ -1,13 +1,13 @@
-// Procedure to add Events in Node
-// Make a class that extends the EventEmitter
-// Make a method and put the emit on it that raise the noise or event/signal
-// Then export that class
-// After that make an instance of that class and put the listener on it and then
-// call the method of class
+// For File Module we import the fs module.In this module every method have two nature that is
+// async and sync in nature sync is quite simple to understand while async is a bit complex to understand
+// but we should use the async because it is non-blocking in nature
 
-const Logger = require("./logger");
-const logger = new Logger();
+const fs = require("fs");
 
-logger.on("messageLogged", (args) => console.log(args));
+// const files = fs.readdirSync("./");
+// console.log(files);
 
-logger.log("Hello");
+fs.readdir("./", function (err, files) {
+  if (err) console.log("Error", err);
+  else console.log(files);
+});
