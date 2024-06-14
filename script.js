@@ -1,13 +1,20 @@
-// For File Module we import the fs module.In this module every method have two nature that is
-// async and sync in nature sync is quite simple to understand while async is a bit complex to understand
-// but we should use the async because it is non-blocking in nature
+// Http module raised different events... EventEmitter
 
-const fs = require("fs");
+const http = require("http");
 
-// const files = fs.readdirSync("./");
-// console.log(files);
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.write("Hello It's me Taimoor Hussain");
+    res.end();
+  }
 
-fs.readdir("./", function (err, files) {
-  if (err) console.log("Error", err);
-  else console.log(files);
+  if (req.url === "/api/courses") {
+    res.write(JSON.stringify([1, 2, 3, 4]));
+    res.end();
+  }
 });
+
+// server.on("connection", (socket) => console.log("Connecting to the server..."));
+
+server.listen(3000);
+console.log("Listening the server...");
