@@ -10,15 +10,29 @@ app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
 });
 
-app.use((req, res) => {
-  console.log("Request is received");
-  //   res.send("Response send ");
-  let htmlResponse =
-    "<h1>Fruits</h1></br><ul><li>Mango</li><li>Banana</li></ul>";
-  //   res.send(htmlResponse);
-  let objectResponse = {
-    name: "Mango",
-    color: "Yellow",
-  };
-  res.send(objectResponse);
+// app.use((req, res) => {
+//   console.log("Request is received");
+//   //   res.send("Response send ");
+//   let htmlResponse =
+//     "<h1>Fruits</h1></br><ul><li>Mango</li><li>Banana</li></ul>";
+//   //   res.send(htmlResponse);
+//   let objectResponse = {
+//     name: "Mango",
+//     color: "Yellow",
+//   };
+//   res.send(objectResponse);
+// });
+
+app.get("/", (req, res) => {
+  res.send("Home page Content");
 });
+
+app.get("/about", (req, res) => {
+  res.send("About page Content");
+});
+
+app.get("/contact", (req, res) => {
+  res.send("Contact page Content");
+});
+
+app.get("*", (req, res) => res.send("Error Page"));
