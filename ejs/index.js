@@ -20,8 +20,8 @@ app.get("/rolldice", (req, res) => {
 
 app.get("/:username", (req, res) => {
   const { username } = req.params;
-  console.log(username);
-  res.render("instagram", { username });
+  let followers = ["Hussain", "Qasim", "Usman", "Bilal", "Hamza", "Umer"];
+  res.render("instagram", { username, followers });
 });
 
 app.listen(port, () => {

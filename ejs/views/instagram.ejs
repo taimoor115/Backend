@@ -9,5 +9,11 @@
     <p>UserName: <%= username %></p>
     <button>Follow</button>
     <button>Message</button>
+
+    <h4>Accounts follow you</h4>
+
+    <% for(let name of followers) { %>
+    <li><%= name %></li>
+    <% } %>
   </body>
 </html>
