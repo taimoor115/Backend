@@ -18,6 +18,12 @@ app.get("/rolldice", (req, res) => {
   res.render("rolldice", { num: value });
 });
 
+app.get("/:username", (req, res) => {
+  const { username } = req.params;
+  console.log(username);
+  res.render("instagram", { username });
+});
+
 app.listen(port, () => {
   console.log(`App is listening on port ${port}...`);
 });
