@@ -1,26 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instagram EJS</title>
-  </head>
-  <body>
-    <p>Login with : <%= data.name %></p>
-    <button>Follow</button>
-    <button>Message</button>
-    <p>
-      Followers <%= data.followers %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Following:
-      <%= data.following %>
-    </p>
-    <hr />
+<%- include("includes/head.ejs") %>
+<body>
+  <p>Login with : <%= data.name %></p>
+  <button>Follow</button>
+  <button>Message</button>
+  <p>
+    Followers <%= data.followers %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Following:
+    <%= data.following %>
+  </p>
+  <hr />
 
-    <% for(let post of data.posts) {%>
-    <img src="<%= post.image %>" alt="image" width="100px" height="100px" />
-    <p>
-      Likes:<%= post.likes %> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Comments: <%=
-      post.comments %>
-    </p>
-    <% }%>
-  </body>
+  <% for(let post of data.posts) {%>
+  <img src="<%= post.image %>" alt="image" width="100px" height="100px" />
+  <p>
+    Likes:<%= post.likes %> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Comments: <%=
+    post.comments %>
+  </p>
+  <% }%>
+</body>
 </html>
