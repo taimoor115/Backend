@@ -13,6 +13,11 @@ app.get("/about", (req, res) => {
   res.send("hello");
 });
 
+app.get("/rolldice", (req, res) => {
+  const value = Math.floor(Math.random() * 6) + 1;
+  res.render("rolldice", { num: value });
+});
+
 app.listen(port, () => {
   console.log(`App is listening on port ${port}...`);
 });
