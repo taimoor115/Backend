@@ -7,5 +7,9 @@ const port = 8080;
 // console.dir(app);
 
 app.listen(port, () => {
-  console.log("App is listening ");
+  console.log(`App is listening on port ${port}`);
+});
+
+app.use((req, res) => {
+  console.log("Request is received");
 });
