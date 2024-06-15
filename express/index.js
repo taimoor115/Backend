@@ -24,7 +24,7 @@ app.listen(port, () => {
 // });
 
 app.get("/", (req, res) => {
-  res.send("Home page Content");
+  res.send("Home Page is here ");
 });
 
 app.get("/about", (req, res) => {
