@@ -12,4 +12,13 @@ app.listen(port, () => {
 
 app.use((req, res) => {
   console.log("Request is received");
+  //   res.send("Response send ");
+  let htmlResponse =
+    "<h1>Fruits</h1></br><ul><li>Mango</li><li>Banana</li></ul>";
+  //   res.send(htmlResponse);
+  let objectResponse = {
+    name: "Mango",
+    color: "Yellow",
+  };
+  res.send(objectResponse);
 });
