@@ -27,6 +27,12 @@ app.get("/", (req, res) => {
   res.send("Home Page is here ");
 });
 
+app.get("/:username/:id", (req, res) => {
+  const { username, id } = req.params;
+  const code = `<h1>Welcome to ${username} Account</h1>`;
+  res.send(code);
+});
+
 app.get("/about", (req, res) => {
   res.send("About page Content");
 });
