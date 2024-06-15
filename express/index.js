@@ -27,10 +27,17 @@ app.get("/", (req, res) => {
   res.send("Home Page is here ");
 });
 
-app.get("/:username/:id", (req, res) => {
-  const { username, id } = req.params;
-  const code = `<h1>Welcome to ${username} Account</h1>`;
-  res.send(code);
+// app.get("/:username/:id", (req, res) => {
+//   const { username, id } = req.params;
+//   const code = `<h1>Welcome to ${username} Account</h1>`;
+//   res.send(code);
+// });
+
+// http://localhost:8080/search?q=Mango&color=yellow
+app.get("/search", (req, res) => {
+  const { q, color } = req.query;
+  console.log(q);
+  res.send(`Result for ${q} ${color}`);
 });
 
 app.get("/about", (req, res) => {
