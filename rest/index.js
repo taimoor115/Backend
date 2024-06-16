@@ -2,7 +2,7 @@ const exp = require("constants");
 const express = require("express");
 const app = express();
 const path = require("path");
-
+const { v4: uuidv4 } = require("uuid");
 // middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -17,12 +17,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 let posts = [
   {
-    id: "1a",
+    id: uuidv4(),
     username: "taimoor",
     content: "Hey there! I'm learning Backend",
   },
   {
-    id: "1b",
+    id: uuidv4(),
     username: "Taimoor Hussain",
     content: "Hey there! How is going? Hope so its going well",
   },
@@ -42,6 +42,7 @@ app.get("/posts/new", (req, res) => {
 app.post("/posts", (req, res) => {
   let { username, content } = req.body;
   let newPost = {
+    id: uuidv4(),
     username: username,
     content: content,
   };
