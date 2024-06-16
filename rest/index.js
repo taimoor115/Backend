@@ -17,20 +17,24 @@ app.use(express.static(path.join(__dirname, "public")));
 
 let posts = [
   {
+    id: "1a",
     username: "taimoor",
     content: "Hey there! I'm learning Backend",
   },
   {
+    id: "1b",
     username: "Taimoor Hussain",
     content: "Hey there! How is going? Hope so its going well",
   },
 ];
 
 // Routes
+
+// Show Post
 app.get("/posts", (req, res) => {
   res.render("home", { posts });
 });
-
+// Create Post
 app.get("/posts/new", (req, res) => {
   res.render("create.ejs");
 });
@@ -44,6 +48,16 @@ app.post("/posts", (req, res) => {
   posts.push(newPost);
   res.redirect("/posts");
 });
+
+// Show Individual post
+
+app.get("/posts/:id", (req, res) => {
+  const { id } = req.params;
+  let data = posts.find((post) => post.id == id);
+
+  res.render("read", { post: data });
+});
+
 // Server
 const port = 8080;
 app.listen(port, () => {

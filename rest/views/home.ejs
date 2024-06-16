@@ -8,12 +8,17 @@
   </head>
   <body>
     <h3 class="post">All Posts</h3>
-    <a href="http://localhost:8080/posts/new">Create New Post</a>
+    <button>
+      <a href="http://localhost:8080/posts/new">Create New Post</a>
+    </button>
     <% for(let post of posts) { %>
 
     <div class="posts">
       <h4>@<%= post.username %></h4>
       <p><%= post.content %></p>
+      <button>
+        <a href="http://localhost:8080/posts/<%= post.id %>">See detail</a>
+      </button>
     </div>
 
     <% } %>
