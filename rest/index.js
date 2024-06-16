@@ -30,6 +30,20 @@ let posts = [
 app.get("/posts", (req, res) => {
   res.render("home", { posts });
 });
+
+app.get("/posts/new", (req, res) => {
+  res.render("create.ejs");
+});
+
+app.post("/posts", (req, res) => {
+  let { username, content } = req.body;
+  let newPost = {
+    username: username,
+    content: content,
+  };
+  posts.push(newPost);
+  res.render("home", { posts });
+});
 // Server
 const port = 8080;
 app.listen(port, () => {
