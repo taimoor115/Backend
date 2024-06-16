@@ -6,12 +6,14 @@
     <title>Create</title>
   </head>
   <body>
-    <form method="post" action="http://localhost:8080/posts">
-      <input type="text" placeholder="Username" name="username" required />
-      <br />
-      <br />
-      <br />
+    <h2>Edit the Post</h2>
+    <p>PostID:<%= post.id %></p>
+    <p>Username:<%= post.username %></p>
+
+    <form method="post" action="/posts/<%= post.id %>?_method=PATCH">
       <textarea
+        rows="5"
+        cols="40"
         type="text"
         maxlength="200"
         minlength="1"
@@ -24,8 +26,7 @@
       >
       <br />
       <br />
-      <button type="submit">Create Post</button>
-      <br />
+      <button type="submit">Update Post</button>
     </form>
   </body>
 </html>

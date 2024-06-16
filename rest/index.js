@@ -3,10 +3,13 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
+const methodOveride = require("method-override");
 // middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Override request
+app.use(methodOveride("_method"));
 // Ejs
 app.set("view engine", "ejs");
 // paths
@@ -59,6 +62,22 @@ app.get("/posts/:id", (req, res) => {
   res.render("read", { post: data });
 });
 
+// Update the post
+app.patch("/posts/:id", (req, res) => {
+  const { id } = req.params;
+  const newContent = req.body.content;
+  let data = posts.find((post) => post.id == id);
+  data.content = newContent;
+  res.redirect("/posts");
+});
+
+// Edit form
+app.get("/posts/:id/update", (req, res) => {
+  const { id } = req.params;
+  let post = posts.find((post) => post.id == id);
+  console.log(id);
+  res.render("update", { post });
+});
 // Server
 const port = 8080;
 app.listen(port, () => {
