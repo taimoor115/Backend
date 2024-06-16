@@ -11,11 +11,24 @@ app.use(express.json());
 app.set("view engine", "ejs");
 // paths
 app.set("views", path.join(__dirname, "/views"));
-app.set(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
+
+// data
+
+let posts = [
+  {
+    username: "taimoor",
+    content: "Hey there! I'm learning Backend",
+  },
+  {
+    username: "Taimoor Hussain",
+    content: "Hey there! How is going? Hope so its going well",
+  },
+];
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("<p>server working well</p>");
+app.get("/posts", (req, res) => {
+  res.render("home", { posts });
 });
 // Server
 const port = 8080;
