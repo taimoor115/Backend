@@ -42,7 +42,7 @@ app.post("/posts", (req, res) => {
     content: content,
   };
   posts.push(newPost);
-  res.render("home", { posts });
+  res.redirect("/posts");
 });
 // Server
 const port = 8080;
