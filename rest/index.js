@@ -39,7 +39,7 @@ app.get("/posts", (req, res) => {
 });
 // Create Post
 app.get("/posts/new", (req, res) => {
-  res.render("create.ejs");
+  res.render("create");
 });
 
 app.post("/posts", (req, res) => {
@@ -75,9 +75,18 @@ app.patch("/posts/:id", (req, res) => {
 app.get("/posts/:id/update", (req, res) => {
   const { id } = req.params;
   let post = posts.find((post) => post.id == id);
-  console.log(id);
+
   res.render("update", { post });
 });
+
+app.delete("/posts/:id", (req, res) => {
+  const { id } = req.params;
+
+  posts = posts.filter((post) => post.id !== id);
+
+  res.redirect("/posts");
+});
+
 // Server
 const port = 8080;
 app.listen(port, () => {

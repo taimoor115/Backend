@@ -22,7 +22,12 @@
       <button>
         <a href="http://localhost:8080/posts/<%= post.id %>/update">Update</a>
       </button>
+
+      <form action="/posts/<%= post.id %>?_method=DELETE" method="post">
+        <button>Delete posts</button>
+      </form>
     </div>
+
     <% } %>
   </body>
 </html>
