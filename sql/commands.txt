@@ -1,0 +1,122 @@
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255),
+    bio TEXT,
+    profile_image_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE posts (
+    post_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    image_url VARCHAR(255) NOT NULL,
+    caption TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE comments (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    comment_text TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE likes (
+    like_id INT AUTO_INCREMENT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE followers (
+    follower_id INT AUTO_INCREMENT PRIMARY KEY,
+    follower_user_id INT,
+    following_user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (follower_user_id) REFERENCES users(user_id),
+    FOREIGN KEY (following_user_id) REFERENCES users(user_id),
+    UNIQUE(follower_user_id, following_user_id)
+);
+
+
+SELECT columns
+FROM table1
+INNER JOIN table2 ON table1.column = table2.column;
+
+
+SELECT users.username, posts.caption
+FROM users
+INNER JOIN posts ON users.user_id = posts.user_id;
+
+SELECT columns
+FROM table1
+LEFT JOIN table2 ON table1.column = table2.column;
+
+SELECT users.username, posts.caption
+FROM users
+LEFT JOIN posts ON users.user_id = posts.user_id;
+
+SELECT columns
+FROM table1
+RIGHT JOIN table2 ON table1.column = table2.column;
+
+SELECT users.username, posts.caption
+FROM users
+RIGHT JOIN posts ON users.user_id = posts.user_id;
+
+SELECT users.username, posts.caption
+FROM users
+LEFT JOIN posts ON users.user_id = posts.user_id
+UNION
+SELECT users.username, posts.caption
+FROM users
+RIGHT JOIN posts ON users.user_id = posts.user_id
+WHERE users.user_id IS NULL;
+
+SELECT u.username, p.caption
+FROM users u
+INNER JOIN posts p ON u.user_id = p.user_id;
+
+
+
+SYNTAX
+DDL
+CREATE DATABASE dbname;
+CREATE TABLE tablename (
+    column1 datatype constraints,
+    column2 datatype constraints,
+    ...
+);
+ALTER TABLE tablename ADD columnname datatype constraints;
+DROP TABLE tablename;
+CREATE INDEX indexname ON tablename (columnname);
+
+DML 
+INSERT INTO tablename (column1, column2, ...) VALUES (value1, value2, ...);
+UPDATE tablename SET column1 = value1 WHERE condition;
+DELETE FROM tablename WHERE condition;
+
+DQL
+SELECT columns FROM tablename WHERE condition;
+SELECT columns
+FROM table1
+INNER JOIN table2 ON table1.column = table2.column;
+
+DCL
+GRANT SELECT, INSERT, UPDATE ON dbname.tablename TO 'username'@'hostname';
+REVOKE SELECT ON dbname.tablename FROM 'username'@'hostname';
+
+TCL
+START TRANSACTION;
+COMMIT;
+ROLLBACK;
