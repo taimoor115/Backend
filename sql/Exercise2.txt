@@ -1,0 +1,58 @@
+USE COLLEGE;
+
+CREATE TABLE STUDENT(
+	roll_no INT PRIMARY KEY,
+    name VARCHAR(40) NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    marks INT NOT NULL
+);
+
+INSERT INTO STUDENT
+VALUES
+(113, "Akram", "Islamabad", 55),
+(114, "Qasim", "Multan", 45),
+(115, "Qaim", "Karachi", 45),
+(116, "Ahsan", "Islamabad", 85);
+
+-- SELECT STUDENTS WHO SCORE 75+ score 
+SELECT * FROM STUDENT WHERE marks > 75;
+
+-- FIND NAMES OF CITIES WHERE STUDENT ARE FROM
+SELECT city FROM STUDENT
+GROUP BY city; 
+
+-- FIND MAX MARKS OF STUDENT FROM EACH CITY 
+
+SELECT city, MAX(marks) FROM STUDENT
+GROUP BY city; 
+
+-- FIND AVERAGE OF CLASS
+SELECT avg(marks) as AVERAGEOFCLASS FROM STUDENT; 
+
+-- ADD NEW COLUMN GRADE AND ASSIGN GRADE SUCH THAT 
+-- MARKS > 80, grade O
+-- marks 70-80, grade A
+-- marks 60-70, grade B
+
+ALTER TABLE STUDENT 
+ADD COLUMN grade VARCHAR(1);
+
+UPDATE STUDENT 
+SET grade = "O"
+WHERE marks > 80;
+
+UPDATE STUDENT 
+SET grade = "A"
+WHERE marks > 70 AND marks < 80;
+
+UPDATE STUDENT 
+SET grade = "B"
+WHERE marks > 60 AND marks < 70;
+
+UPDATE STUDENT 
+SET grade = "F"
+WHERE marks < 60;
+
+
+SELECT * FROM STUDENT;
+
