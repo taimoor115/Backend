@@ -120,3 +120,135 @@ TCL
 START TRANSACTION;
 COMMIT;
 ROLLBACK;
+
+
+CREATE TABLE user (
+id INT NOT NULL UNIQUE,
+name VARCHAR(100) NOT NULL,
+age INT NOT NULL,
+email VARCHAR(50) NOT NULL UNIQUE,
+follower INT NOT NULL default 0,
+following INT NOT NULL default 0,
+CONSTRAINT age_check CHECK(age > 13),
+PRIMARY KEY(id)
+);
+
+INSERT INTO user 
+VALUES
+(1, "Taimoor", 23, "taimoorhussain985@gmail.com", 1000, 03),
+(2, "Ghayoor", 23, "ghayoorhussain985@gmail.com", 1590, 00),
+(3, "Hussain", 23, "hussain985@gmail.com", 50, 100),
+(4, "Ali", 23, "ali985@gmail.com", 200, 30),
+(5, "Aslam", 23, "aslam@gmail.com", 10, 500);
+
+
+select name from user where follower > 50;
+
+show tables;
+
+
+Operator 
+select name,age,follower from user
+where 
+age > 15 OR follower>200 ;
+-- AND 
+select name,age,follower from user
+where 
+age > 15 AND follower>200 ;
+
+-- BETWEEN
+select name,age,follower from user
+where 
+age > 15 BETWEEN 15 AND 17;
+
+-- IN
+select name, follower from user
+where
+name in ("Taimoor", "Hussain", "Amjad", "Ghayoor");
+
+select name, follower from user
+where
+age IN (19, 22);
+
+-- NOT
+select name, follower from user
+where
+age NOT IN (19, 22);
+
+-- LIMIT
+Select * from user LIMIT 3;
+
+-- ORDER BY
+SELECT * FROM user ORDER BY name desc;
+
+-- AGREGATE FUNCTIONS
+-- MAX
+select max(follower) AS MAX_FOLLOWERS  from user;
+--  MIN
+select min(follower) AS MAX_FOLLOWERS  from user;
+-- COUNT 
+select count(id) as TOTAL_USER from user;
+select count(age) from user where age > 23;
+-- AVERAGE
+select avg(age) as AVERAGE_AGE from user;
+-- SUM
+select sum(follower) as TOTAL_FOLLOWER from user;
+
+-- GROUP BY
+select age, count(id) from user
+group by age;
+
+select age, max(follower) from user 
+group by age;
+
+-- Having Clause
+select age, max(follower) from user 
+group by age
+having max(follower) > 200;
+
+
+-- GENERAL ORDER
+-- SELECT column(s)
+-- FROM table_name
+-- where condition
+-- group by columns
+-- having condition
+-- order by columns
+
+
+-- UPDATE ROWS
+UPDATE user 
+SET FOLLOWER = 600
+where age = 23;
+
+SET SQL_SAFE_UPDATES= 0;
+
+select name, follower, age from user where age = 23;
+
+-- DELETE
+DELETE FROM user
+where age = 20;
+
+-- ALTER
+Alter table user
+Add column city varchar(40) default "Lahore";
+
+ALTER TABLE user
+DROP COLUMN city;
+
+ALTER TABLE user
+RENAME TO users;
+
+ALTER TABLE users 
+CHANGE COLUMN follower subscribers INT DEFAULT 0;
+
+ALTER TABLE users
+MODIFY email VARCHAR(40);
+
+show tables;
+TRUNCATE table post;
+select *from post;
+
+
+
+
