@@ -8,10 +8,14 @@ const connection = mysql.createConnection({
   password: "root",
 });
 
+let q = "SHOW TABLES";
 try {
-  connection.query("Show Tables", (err, result) => {
+  connection.query(q, (err, result) => {
     if (err) throw new Error();
     console.log(result);
+    console.log(result[0]);
+    console.log(result[1]);
+    console.log(result.length);
   });
 } catch (error) {
   console.log(error);
