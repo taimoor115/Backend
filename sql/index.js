@@ -7,6 +7,7 @@ let port = 8080;
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(path.join((__dirname, "public"))));
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -28,29 +29,19 @@ app.get("/", (req, res) => {
   }
 });
 
+app.get("/users", (req, res) => {
+  let q = "SELECT * FROM user";
+  try {
+    connection.query(q, (error, result) => {
+      if (error) throw error;
+
+      res.render("show", { users: result });
+    });
+  } catch (error) {
+    res.send("Error in DB");
+  }
+});
+
 app.listen(port, () => {
   console.log(`App is working on ${port}`);
 });
-// let q = "INSERT INTO user(id, username, email, password) VALUES ?";
-
-// let createRandomUser = () => {
-//   return [
-//     faker.string.uuid(),
-//     faker.internet.userName(),
-//     faker.internet.email(),
-//     faker.internet.password(),
-//   ];
-// };
-
-// let data = [];
-// for (let i = 1; i <= 100; i++) {
-//   data.push(createRandomUser());
-// }
-// try {
-//   connection.query(q, [data], (err, result) => {
-//     if (err) throw new Error();
-//   });
-// } catch (error) {
-//   console.log(error);
-// }
-// connection.end();
