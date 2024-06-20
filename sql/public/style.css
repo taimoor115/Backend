@@ -12,3 +12,7 @@ a:link {
 input {
   padding: 10px;
 }
+
+.delete {
+  color: red;
+}

@@ -87,6 +87,21 @@ app.patch("/user/:id", (req, res) => {
   }
 });
 
+app.delete("/user/:id", (req, res) => {
+  const { id } = req.params;
+  let q = `DELETE FROM user WHERE id = "${id}"`;
+
+  try {
+    connection.query(q, (error, result) => {
+      if (error) throw error;
+
+      res.redirect("/user");
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`App is working on ${port}`);
 });

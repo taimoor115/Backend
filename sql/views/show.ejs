@@ -24,6 +24,7 @@
         <th>Id</th>
         <th>Email</th>
         <th></th>
+        <th></th>
       </tr>
       <% for(let user of users) { %>
       <tr>
@@ -34,6 +35,11 @@
           <button>
             <a href="http://localhost:8080/user/<%= user.id %>/edit">Edit </a>
           </button>
+        </td>
+        <td>
+          <form action="/user/<%= user.id %>?_method=DELETE" method="post">
+            <button class="delete">Delete X</button>
+          </form>
         </td>
       </tr>
       <% } %>
