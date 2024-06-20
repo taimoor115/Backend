@@ -34,6 +34,11 @@ app.get("/", (req, res) => {
 
 app.get("/user", (req, res) => {
   let q = "SELECT * FROM user";
+  const { username } = req.query;
+  console.log(username);
+  if (username) {
+    q += ` WHERE username LIKE '%${username}%'`;
+  }
   try {
     connection.query(q, (error, result) => {
       if (error) throw error;
