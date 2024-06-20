@@ -14,12 +14,18 @@
         <th>Username</th>
         <th>Id</th>
         <th>Email</th>
+        <th></th>
       </tr>
       <% for(let user of users) { %>
       <tr>
         <td><%= user.username %></td>
         <td><%= user.id %></td>
         <td><%= user.email %></td>
+        <td>
+          <button>
+            <a href="http://localhost:8080/user/<%= user.id %>/edit">Edit </a>
+          </button>
+        </td>
       </tr>
       <% } %>
     </table>
