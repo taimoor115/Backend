@@ -60,7 +60,26 @@ app.get("/user/:id/edit", (req, res) => {
   }
 });
 app.patch("/user/:id", (req, res) => {
-  res.send("Success");
+  const { id } = req.params;
+  const { username, password } = req.body;
+  let q = `SELECT * FROM user WHERE id ="${id}"`;
+
+  try {
+    connection.query(q, (error, result) => {
+      if (error) throw error;
+      let user = result[0];
+      if (user.password !== password) {
+        res.send("Wrong password try again!!");
+      } else {
+        let query = `UPDATE user SET username = "${username}" where id = "${id}"`;
+        connection.query(query, (error, result) => {
+          res.redirect("/user");
+        });
+      }
+    });
+  } catch (error) {
+    res.send("Something Happen in DB");
+  }
 });
 
 app.listen(port, () => {
