@@ -19,6 +19,29 @@ const connection = mysql.createConnection({
   password: "root",
 });
 
+app.get("/user/new", (req, res) => {
+  res.render("new");
+});
+
+app.post("/user", (req, res) => {
+  const { username, email, password } = req.body;
+  console.log(username);
+  let q = "INSERT INTO user VALUES (?,?,?,?)";
+  try {
+    connection.query(
+      q,
+      [faker.string.uuid(), username, email, password],
+      (error, result) => {
+        if (error) throw error;
+        console.log(result);
+        res.redirect("/user");
+      }
+    );
+  } catch (error) {
+    res.send("Error while storing in DB");
+  }
+});
+
 app.get("/", (req, res) => {
   let q = "SELECT count(*) FROM user";
   try {

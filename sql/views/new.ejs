@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <form method="post" action="/user">
+      <input
+        type="text"
+        required
+        placeholder="Username"
+        name="username"
+      /><br /><br />
+      <input
+        type="email"
+        required
+        placeholder="Email"
+        name="email"
+      /><br /><br />
+      <input
+        type="password"
+        required
+        placeholder="Password"
+        name="password"
+      /><br /><br />
+      <button type="submit">Create</button>
+    </form>
+  </body>
+</html>
