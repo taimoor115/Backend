@@ -16,23 +16,8 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-User.updateOne({ name: "Gahyoor Hussain" }, { name: "Bilal Arshad" }).then(
-  (res) => console.log(res)
-);
-
-User.updateMany({ age: { $gt: 20 } }, { age: 22 }).then((res) =>
-  console.log(res)
-);
-
-User.findOneAndUpdate(
-  { name: "Taimoor Hussain" },
-  { age: 34 },
-  { new: true }
-).then((res) => console.log(res));
-
-User.findByIdAndUpdate(
-  "66780f5a07f09aa2d3875345",
-  { age: 35 },
-  { new: true }
-).then((res) => console.log(res));
+// User.deleteOne({ name: "Taimoor Hussain" }).then((res) => console.log(res));
+// deleteMany
+// findOneAndDelete
+// findByIdAndDelete
 // User.find().then((res) => console.log(res));
