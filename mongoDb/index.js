@@ -16,8 +16,23 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// User.find({ age: { $gt: 24 } }).then((res) => console.log(res));
+User.updateOne({ name: "Gahyoor Hussain" }, { name: "Bilal Arshad" }).then(
+  (res) => console.log(res)
+);
 
-// User.find({ _id: "66780fb8ffd3da3bf619f65b" }).then((res) => console.log(res));
+User.updateMany({ age: { $gt: 20 } }, { age: 22 }).then((res) =>
+  console.log(res)
+);
 
-User.findById("66780fb8ffd3da3bf619f65b").then((res) => console.log(res));
+User.findOneAndUpdate(
+  { name: "Taimoor Hussain" },
+  { age: 34 },
+  { new: true }
+).then((res) => console.log(res));
+
+User.findByIdAndUpdate(
+  "66780f5a07f09aa2d3875345",
+  { age: 35 },
+  { new: true }
+).then((res) => console.log(res));
+// User.find().then((res) => console.log(res));
