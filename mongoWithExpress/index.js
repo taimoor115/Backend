@@ -27,29 +27,18 @@ async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/project");
 }
 
-// DB
-
-const chat1 = new Chat({
-  from: "Taimoor Hussain",
-  to: "Bilal Arshad",
-  message: "Hey Brother! How are you?",
-  createdAt: new Date(),
-});
-
-chat1
-  .save()
-  .then((res) => {
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// DB Commands
 
 // Routes
 app.get("/", (req, res) => {
   res.send("Server is working....");
 });
 
+app.get("/chats", async (req, res) => {
+  let chats = await Chat.find();
+  console.log(chats);
+  res.render("chat", { chats });
+});
 // Setup server
 const port = 8080;
 app.listen(port, () => {
