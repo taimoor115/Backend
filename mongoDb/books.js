@@ -12,21 +12,42 @@ const booksSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    maxLength: 20,
   },
   author: {
     type: String,
   },
   price: {
     type: Number,
+    min: [1, "Enter postive value"],
+  },
+
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  genre: [String],
+  category: {
+    type: String,
+    enum: ["fiction", "non-fiction"],
   },
 });
 
 const Books = mongoose.model("Books", booksSchema);
 
-const book1 = new Books({
-  title: "Computer Science",
-  author: "Hassan Munawar",
+const book2 = new Books({
+  title: "Java",
+  author: " William ",
   price: 2000,
+  genre: ["Love Computer", "Programming"],
+  category: "fiction",
 });
 
-book1.save().then((res) => console.log(res));
+Books.findByIdAndUpdate(
+  "66786a2856aa01df9f128985",
+  { price: -500 },
+  { runValidators: true }
+)
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err.errors.price.properties.message));
+// book2.save().then((res) => console.log(res));
