@@ -92,6 +92,17 @@ app.patch("/chats/:id", async (req, res) => {
 
   res.redirect("/chats");
 });
+
+// Delete
+
+app.delete("/chats/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  await Chat.findByIdAndDelete(id, { new: true }).then((res) =>
+    console.log(res)
+  );
+  res.redirect("/chats");
+});
 // Setup server
 const port = 8080;
 app.listen(port, () => {
