@@ -6,8 +6,8 @@ const Chat = require("./models/chat.js");
 
 // middleware
 
-app.set(express.urlencoded({ extended: true }));
-app.set(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // Setup EJS
 
 app.set("view engine", "ejs");
@@ -38,6 +38,29 @@ app.get("/chats", async (req, res) => {
   let chats = await Chat.find();
   console.log(chats);
   res.render("chat", { chats });
+});
+
+app.get("/chats/new", (req, res) => {
+  try {
+    res.render("newChat");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.post("/chats", (req, res) => {
+  const { from, message, to } = req.body;
+  const chat = new Chat({
+    from,
+    to,
+    message,
+    createdAt: new Date(),
+  });
+  chat
+    .save()
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+  res.redirect("/chats");
 });
 // Setup server
 const port = 8080;
