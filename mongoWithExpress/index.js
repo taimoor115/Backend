@@ -3,11 +3,16 @@ const app = express();
 const path = require("path");
 const mongoose = require("mongoose");
 const Chat = require("./models/chat.js");
+const methodOverride = require("method-override");
 
 // middleware
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride("_method"));
+
 // Setup EJS
 
 app.set("view engine", "ejs");
@@ -72,6 +77,20 @@ app.get("/chats/:id/edit", async (req, res) => {
   const chat = await Chat.findById(id);
 
   res.render("editChat", { chat });
+});
+
+// update
+app.patch("/chats/:id", async (req, res) => {
+  const { id } = req.params;
+  const { message } = req.body;
+
+  await Chat.findByIdAndUpdate(
+    id,
+    { message, createdAt: new Date() },
+    { new: true, runValidators: true }
+  ).then((res) => console.log(res));
+
+  res.redirect("/chats");
 });
 // Setup server
 const port = 8080;

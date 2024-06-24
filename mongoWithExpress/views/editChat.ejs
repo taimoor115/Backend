@@ -8,8 +8,13 @@
   <body>
     <h3>Edit the Message</h3>
     <h4>You are edit the message of <%= chat.from %> to <%= chat.to %></h4>
-    <textarea name="message" rows="10" cols="30"><%= chat.message %></textarea
-    ><br /><br />
-    <button type="submit">Send</button>
+    <form action="/chats/<%= chat.id %>?_method=PATCH" method="post">
+      <textarea name="message" rows="10" cols="30">
+<%= chat.message %></textarea
+      >
+
+      <br /><br />
+      <button type="submit">Edit</button>
+    </form>
   </body>
 </html>
