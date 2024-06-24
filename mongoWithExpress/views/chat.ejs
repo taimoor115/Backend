@@ -18,6 +18,9 @@
       <h4>Receiver: <%= chat.to %></h4>
       <p><%= chat.createdAt.toString().split(" ")[4] %></p>
       <p><%= chat.createdAt.toString().split(" ").splice(0,4).join(" ") %></p>
+      <form action="/chats/<%= chat._id %>/edit" method="get">
+        <button type="submit">Edit Message</button>
+      </form>
       <hr />
     </div>
     <% } %>

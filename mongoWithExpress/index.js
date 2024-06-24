@@ -34,12 +34,14 @@ app.get("/", (req, res) => {
   res.send("Server is working....");
 });
 
+// Read
 app.get("/chats", async (req, res) => {
   let chats = await Chat.find();
   console.log(chats);
   res.render("chat", { chats });
 });
 
+// Create
 app.get("/chats/new", (req, res) => {
   try {
     res.render("newChat");
@@ -61,6 +63,15 @@ app.post("/chats", (req, res) => {
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
   res.redirect("/chats");
+});
+
+// Edit
+app.get("/chats/:id/edit", async (req, res) => {
+  const { id } = req.params;
+
+  const chat = await Chat.findById(id);
+
+  res.render("editChat", { chat });
 });
 // Setup server
 const port = 8080;
