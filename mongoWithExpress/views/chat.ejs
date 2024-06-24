@@ -16,6 +16,8 @@
       <h4>Sender: <%= chat.from %></h4>
       <p>Message:<%= chat.message %></p>
       <h4>Receiver: <%= chat.to %></h4>
+      <p><%= chat.createdAt.toString().split(" ")[4] %></p>
+      <p><%= chat.createdAt.toString().split(" ").splice(0,4).join(" ") %></p>
       <hr />
     </div>
     <% } %>
