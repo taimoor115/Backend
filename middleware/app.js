@@ -10,7 +10,19 @@
 const express = require("express");
 const app = express();
 
-const port = 8080;
+app.get("/err", (req, res) => {
+  abc = abc;
+});
+
+app.use((err, req, res, next) => {
+  console.log("ERROR 1-----");
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  console.log("ERROR 2-----");
+  next(err);
+});
 
 const checkAccessiblity = (req, res, next) => {
   const { token } = req.query;
@@ -30,10 +42,13 @@ app.get("/", (req, res) => {
 app.get("/random", (req, res) => {
   res.send("random");
 });
+
+// app.use((req, res) => {
+//   res.status(404).send("Page not Found");
+// });
+
+const port = 8080;
+
 app.listen(port, (req, res) => {
   console.log(`Server is working on port ${port}`);
-});
-
-app.use((req, res) => {
-  res.status(404).send("Page not Found");
 });
