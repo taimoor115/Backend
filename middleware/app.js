@@ -12,9 +12,10 @@ const app = express();
 
 const port = 8080;
 
-// It always run because app.use for all routes if we don't give any route
-app.use((req, res) => {
-  res.send("middleware");
+app.use((req, res, next) => {
+  const time = new Date(Date.now()).toString();
+  console.log(req.method, req.hostname, req.path, time);
+  next();
 });
 
 app.get("/", (req, res) => {
