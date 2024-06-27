@@ -12,15 +12,18 @@ const app = express();
 
 const port = 8080;
 
-app.use("/random", (req, res, next) => {
-  const time = new Date(Date.now()).toString();
-  console.log(req.method, req.hostname, req.path, time);
-  next();
-});
-app.use((req, res) => {
-  res.status(404).send("Page not Found");
+app.use("/api", (req, res, next) => {
+  const { token } = req.query;
+  if (token === "give_access") {
+    next();
+  } else {
+    res.send("ACCESS DENIED!");
+  }
 });
 
+app.get("/api", (req, res) => {
+  res.send("Data...");
+});
 app.get("/", (req, res) => {
   res.send("Working fine...");
 });
@@ -29,4 +32,8 @@ app.get("/random", (req, res) => {
 });
 app.listen(port, (req, res) => {
   console.log(`Server is working on port ${port}`);
+});
+
+app.use((req, res) => {
+  res.status(404).send("Page not Found");
 });
