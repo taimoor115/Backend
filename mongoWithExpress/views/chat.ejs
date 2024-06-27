@@ -22,7 +22,7 @@
         <button type="submit">Edit Message</button>
       </form>
       <br />
-
+      <a href="/chats/<%= chat._id %>">Show</a>
       <form action="/chats/<%= chat._id %>?_method=DELETE" method="post">
         <button type="submit">Delete</button>
       </form>

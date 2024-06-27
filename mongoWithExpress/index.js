@@ -4,6 +4,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const Chat = require("./models/chat.js");
 const methodOverride = require("method-override");
+const ExpressError = require("./ExpressError.js");
 
 // middleware
 
@@ -102,6 +103,21 @@ app.delete("/chats/:id", async (req, res) => {
     console.log(res)
   );
   res.redirect("/chats");
+});
+
+app.get("/chats/:id", async (req, res, next) => {
+  let { id } = req.params;
+  let chat = await Chat.findById(id);
+
+  if (!chat) {
+    next(new ExpressError(401, "Chat not found"));
+  }
+  res.render("editChat", { chat });
+});
+
+app.use((err, req, res, next) => {
+  let { status = 500, message = "Some Error Occurred" } = err;
+  res.status(status).send(message);
 });
 // Setup server
 const port = 8080;
