@@ -9,28 +9,18 @@
 
 const express = require("express");
 const app = express();
+const ExpressError = require("./ExpressError");
 
 app.get("/err", (req, res) => {
   abc = abc;
-});
-
-app.use((err, req, res, next) => {
-  console.log("ERROR 1-----");
-  next(err);
-});
-
-app.use((err, req, res, next) => {
-  console.log("ERROR 2-----");
-  next(err);
 });
 
 const checkAccessiblity = (req, res, next) => {
   const { token } = req.query;
   if (token === "give_access") {
     next();
-  } else {
-    res.send("ACCESS DENIED!");
   }
+  throw new ExpressError(401, "ACCESS DENIED!");
 };
 
 app.get("/api", checkAccessiblity, (req, res) => {
@@ -41,6 +31,10 @@ app.get("/", (req, res) => {
 });
 app.get("/random", (req, res) => {
   res.send("random");
+});
+
+app.use((err, req, res, next) => {
+  res.send(err);
 });
 
 // app.use((req, res) => {
