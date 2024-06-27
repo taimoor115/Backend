@@ -40,72 +40,91 @@ app.get("/", (req, res) => {
   res.send("Server is working....");
 });
 
+//
+function asyncWrap(fn) {
+  return function (req, res, next) {
+    fn(req, res, next).catch((err) => next(err));
+  };
+}
+
 // Read
-app.get("/chats", async (req, res) => {
-  let chats = await Chat.find();
-  console.log(chats);
-  res.render("chat", { chats });
-});
+app.get(
+  "/chats",
+  asyncWrap(async (req, res, next) => {
+    let chats = await Chat.find();
+    console.log(chats);
+    res.render("chat", { chats });
+  })
+);
 
 // Create
-app.get("/chats/new", (req, res) => {
-  try {
+app.get(
+  "/chats/new",
+  asyncWrap((req, res, next) => {
     res.render("newChat");
-  } catch (error) {
-    console.log(error);
-  }
-});
+  })
+);
 
-app.post("/chats", (req, res, next) => {
-  const { from, message, to } = req.body;
-  const chat = new Chat({
-    from,
-    to,
-    message,
-    createdAt: new Date(),
-  });
-  chat
-    .save()
-    .then((res) => res.redirect("/chats"))
-    .catch((err) => next(err));
-});
+app.post(
+  "/chats",
+  asyncWrap((req, res, next) => {
+    const { from, message, to } = req.body;
+    const chat = new Chat({
+      from,
+      to,
+      message,
+      createdAt: new Date(),
+    });
+    chat.save();
+    res.redirect("/chats");
+  })
+);
 
 // Edit
-app.get("/chats/:id/edit", async (req, res) => {
-  const { id } = req.params;
+app.get(
+  "/chats/:id/edit",
+  asyncWrap(async (req, res, next) => {
+    const { id } = req.params;
 
-  const chat = await Chat.findById(id);
+    const chat = await Chat.findById(id);
 
-  res.render("editChat", { chat });
-});
+    res.render("editChat", { chat });
+  })
+);
 
 // update
-app.patch("/chats/:id", async (req, res) => {
-  const { id } = req.params;
-  const { message } = req.body;
+app.patch(
+  "/chats/:id",
+  asyncWrap(async (req, res, next) => {
+    const { id } = req.params;
+    const { message } = req.body;
 
-  await Chat.findByIdAndUpdate(
-    id,
-    { message, createdAt: new Date() },
-    { new: true, runValidators: true }
-  ).then((res) => console.log(res));
-
-  res.redirect("/chats");
-});
+    await Chat.findByIdAndUpdate(
+      id,
+      { message, createdAt: new Date() },
+      { new: true, runValidators: true }
+    );
+    res.redirect("/chats");
+  })
+);
 
 // Delete
 
-app.delete("/chats/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
-  await Chat.findByIdAndDelete(id, { new: true }).then((res) =>
-    console.log(res)
-  );
-  res.redirect("/chats");
-});
+app.delete(
+  "/chats/:id",
+  asyncWrap(async (req, res, next) => {
+    const { id } = req.params;
+    console.log(id);
+    await Chat.findByIdAndDelete(id, { new: true }).then((res) =>
+      console.log(res)
+    );
+    res.redirect("/chats");
+  })
+);
 
-app.get("/chats/:id", async (req, res, next) => {
-  try {
+app.get(
+  "/chats/:id",
+  asyncWrap(async (req, res, next) => {
     let { id } = req.params;
     let chat = await Chat.findById(id);
 
@@ -113,10 +132,8 @@ app.get("/chats/:id", async (req, res, next) => {
       next(new ExpressError(401, "Chat not found"));
     }
     res.render("editChat", { chat });
-  } catch (err) {
-    next(err);
-  }
-});
+  })
+);
 
 app.use((err, req, res, next) => {
   let { status = 500, message = "Some Error Occurred" } = err;
