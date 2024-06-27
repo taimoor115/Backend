@@ -12,16 +12,16 @@ const app = express();
 
 const port = 8080;
 
-app.use("/api", (req, res, next) => {
+const checkAccessiblity = (req, res, next) => {
   const { token } = req.query;
   if (token === "give_access") {
     next();
   } else {
     res.send("ACCESS DENIED!");
   }
-});
+};
 
-app.get("/api", (req, res) => {
+app.get("/api", checkAccessiblity, (req, res) => {
   res.send("Data...");
 });
 app.get("/", (req, res) => {
