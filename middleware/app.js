@@ -12,16 +12,18 @@ const app = express();
 
 const port = 8080;
 
-app.use((req, res, next) => {
+app.use("/random", (req, res, next) => {
   const time = new Date(Date.now()).toString();
   console.log(req.method, req.hostname, req.path, time);
   next();
 });
-
-app.get("/", (req, res) => {
-  res.send("Server working...");
+app.use((req, res) => {
+  res.status(404).send("Page not Found");
 });
 
+app.get("/", (req, res) => {
+  res.send("Working fine...");
+});
 app.get("/random", (req, res) => {
   res.send("random");
 });
