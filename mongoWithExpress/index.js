@@ -52,22 +52,19 @@ app.get(
   "/chats",
   asyncWrap(async (req, res, next) => {
     let chats = await Chat.find();
-    console.log(chats);
+
     res.render("chat", { chats });
   })
 );
 
 // Create
-app.get(
-  "/chats/new",
-  asyncWrap((req, res, next) => {
-    res.render("newChat");
-  })
-);
+app.get("/chats/new", (req, res) => {
+  res.render("newChat");
+});
 
 app.post(
   "/chats",
-  asyncWrap((req, res, next) => {
+  asyncWrap(async (req, res, next) => {
     const { from, message, to } = req.body;
     const chat = new Chat({
       from,
@@ -75,7 +72,7 @@ app.post(
       message,
       createdAt: new Date(),
     });
-    chat.save();
+    await chat.save();
     res.redirect("/chats");
   })
 );
@@ -114,10 +111,8 @@ app.delete(
   "/chats/:id",
   asyncWrap(async (req, res, next) => {
     const { id } = req.params;
-    console.log(id);
-    await Chat.findByIdAndDelete(id, { new: true }).then((res) =>
-      console.log(res)
-    );
+
+    await Chat.findByIdAndDelete(id, { new: true });
     res.redirect("/chats");
   })
 );
@@ -135,6 +130,17 @@ app.get(
   })
 );
 
+const handleValidation = (err) => {
+  console.log("There is a Validation Error! Please follow the rules");
+  return err;
+};
+
+app.use((err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    err = handleValidation(err);
+  }
+  next(err);
+});
 app.use((err, req, res, next) => {
   let { status = 500, message = "Some Error Occurred" } = err;
   res.status(status).send(message);
