@@ -34,7 +34,8 @@ app.get("/random", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.send(err);
+  let { status = 500, message = "Some Error Occured" } = err;
+  res.status(status).send(message);
 });
 
 // app.use((req, res) => {
