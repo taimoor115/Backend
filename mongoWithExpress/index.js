@@ -56,7 +56,7 @@ app.get("/chats/new", (req, res) => {
   }
 });
 
-app.post("/chats", (req, res) => {
+app.post("/chats", (req, res, next) => {
   const { from, message, to } = req.body;
   const chat = new Chat({
     from,
@@ -66,9 +66,8 @@ app.post("/chats", (req, res) => {
   });
   chat
     .save()
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-  res.redirect("/chats");
+    .then((res) => res.redirect("/chats"))
+    .catch((err) => next(err));
 });
 
 // Edit
@@ -106,13 +105,17 @@ app.delete("/chats/:id", async (req, res) => {
 });
 
 app.get("/chats/:id", async (req, res, next) => {
-  let { id } = req.params;
-  let chat = await Chat.findById(id);
+  try {
+    let { id } = req.params;
+    let chat = await Chat.findById(id);
 
-  if (!chat) {
-    next(new ExpressError(401, "Chat not found"));
+    if (!chat) {
+      next(new ExpressError(401, "Chat not found"));
+    }
+    res.render("editChat", { chat });
+  } catch (err) {
+    next(err);
   }
-  res.render("editChat", { chat });
 });
 
 app.use((err, req, res, next) => {
