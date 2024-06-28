@@ -10,7 +10,7 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  mongoose.connect(mongoURL);
+  await mongoose.connect(mongoURL);
 }
 
 const userSchema = new mongoose.Schema({
