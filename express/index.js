@@ -16,16 +16,25 @@ const sesstionOptions = {
 
 app.use(session(sesstionOptions));
 app.use(flash());
+app.use((req, res, next) => {
+  res.locals.successMsg = req.flash("success");
+  res.locals.errorMsg = req.flash("error");
+  next();
+});
 
 app.get("/register", (req, res) => {
   let { name = "Anonymous" } = req.query;
   req.session.name = name;
-  req.flash("success", "User registrations successfully");
+  if (req.session.name === "Anonymous") {
+    req.flash("error", "Registration Failed");
+  } else {
+    req.flash("success", "Registration successfull");
+  }
   res.redirect("/hello");
 });
 
 app.get("/hello", (req, res) => {
-  res.render("page", { name: req.session.name, message: req.flash("success") });
+  res.render("page", { name: req.session.name });
 });
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
