@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 // Ports are the logical endpoints of a network connection that is used to exchange information
 // between a web server and web client
 const port = 8080;
 
 // console.dir(app);
+app.use(cookieParser());
 
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
@@ -23,11 +25,20 @@ app.listen(port, () => {
 //   res.send(objectResponse);
 // });
 
-app.get("/", (req, res) => {
+app.get("/cookies", (req, res) => {
   res.cookie("name", "Taimoor hussain");
   res.send("Cookies ");
 });
 
+app.get("/", (req, res) => {
+  console.dir(req.cookies);
+  res.send("Server Working...");
+});
+
+app.get("/greet", (req, res) => {
+  const { name = "Unknown" } = req.cookies;
+  res.send(`Hello ${name}`);
+});
 // app.get("/:username/:id", (req, res) => {
 //   const { username, id } = req.params;
 //   const code = `<h1>Welcome to ${username} Account</h1>`;
