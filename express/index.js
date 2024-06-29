@@ -24,7 +24,8 @@ app.listen(port, () => {
 // });
 
 app.get("/", (req, res) => {
-  res.send("Home Page is here ");
+  res.cookie("name", "Taimoor hussain");
+  res.send("Cookies ");
 });
 
 // app.get("/:username/:id", (req, res) => {
@@ -34,18 +35,18 @@ app.get("/", (req, res) => {
 // });
 
 // http://localhost:8080/search?q=Mango&color=yellow
-app.get("/search", (req, res) => {
-  const { q, color } = req.query;
-  console.log(q);
-  res.send(`Result for ${q} ${color}`);
-});
+// app.get("/search", (req, res) => {
+//   const { q, color } = req.query;
+//   console.log(q);
+//   res.send(`Result for ${q} ${color}`);
+// });
 
-app.get("/about", (req, res) => {
-  res.send("About page Content");
-});
+// app.get("/about", (req, res) => {
+//   res.send("About page Content");
+// });
 
-app.get("/contact", (req, res) => {
-  res.send("Contact page Content");
-});
+// app.get("/contact", (req, res) => {
+//   res.send("Contact page Content");
+// });
 
-app.get("*", (req, res) => res.send("Error Page"));
+// app.get("*", (req, res) => res.send("Error Page"));
