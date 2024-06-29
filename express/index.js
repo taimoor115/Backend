@@ -4,10 +4,22 @@ const session = require("express-session");
 
 const port = 8080;
 
-app.use(session({ secret: "supersecretkey" }));
+app.use(
+  session({
+    secret: "supersecretkey",
+    resave: "false",
+    saveUninitialized: true,
+  })
+);
 
 app.get("/", (req, res) => {
-  res.send("Working...");
+  if (req.session.count) {
+    req.session.count++;
+  } else {
+    req.session.count = 1;
+  }
+
+  res.send(`You set ${req.session.count} times request`);
 });
 
 app.get("/test", (req, res) => {
