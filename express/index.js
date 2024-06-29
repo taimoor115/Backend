@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const port = 8080;
 
 // console.dir(app);
-app.use(cookieParser());
+app.use(cookieParser("secretCode"));
 
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
@@ -25,9 +25,19 @@ app.listen(port, () => {
 //   res.send(objectResponse);
 // });
 
+app.get("/getsignedcookie", (req, res) => {
+  res.cookie("made", "Pakistan", { signed: true });
+  res.send("Signed Cookie");
+});
+
 app.get("/cookies", (req, res) => {
   res.cookie("name", "Taimoor hussain");
-  res.send("Cookies ");
+  res.send("Cookies");
+});
+
+app.get("/getcookie", (req, res) => {
+  console.dir(req.signedCookies);
+  res.send("Get Cookie Page");
 });
 
 app.get("/", (req, res) => {
