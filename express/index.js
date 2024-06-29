@@ -4,26 +4,21 @@ const session = require("express-session");
 
 const port = 8080;
 
-app.use(
-  session({
-    secret: "supersecretkey",
-    resave: "false",
-    saveUninitialized: true,
-  })
-);
+const sesstionOptions = {
+  secret: "mysecretkey",
+  resave: false,
+  saveUninitialized: true,
+};
+app.use(session(sesstionOptions));
 
-app.get("/", (req, res) => {
-  if (req.session.count) {
-    req.session.count++;
-  } else {
-    req.session.count = 1;
-  }
-
-  res.send(`You set ${req.session.count} times request`);
+app.get("/register", (req, res) => {
+  let { name = "Anonymous" } = req.query;
+  req.session.name = name;
+  res.send(`User ${name}`);
 });
 
-app.get("/test", (req, res) => {
-  res.send("Testing...");
+app.get("/hello", (req, res) => {
+  res.send(`Hello ${req.session.name}`);
 });
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
